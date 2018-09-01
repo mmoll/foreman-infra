@@ -32,6 +32,14 @@ class utility($sysadmins = ['/dev/null']) {
     name   => 'ruby-shadow',
   }
 
+  package { 'mailx':
+    ensure => present,
+    name => $osfamily ? {
+      'Debian' => 'bsd-mailx',
+      default  => 'mailx'
+    }
+  }
+
   mailalias { 'sysadmins':
     ensure    => present,
     recipient => $sysadmins,
